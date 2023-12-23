@@ -9,7 +9,6 @@ using System.Windows.Threading;
 namespace CustomEngine_Test
 {
     internal class GraphicSystem
-   
     {
         public static void Run()
         {
@@ -22,72 +21,115 @@ namespace CustomEngine_Test
                         Dispatcher.CurrentDispatcher));
 
                 // Create and show the Window
-                Window wnd = new Window();
+                Window wnd = new Window
+                {
+                    // Define the window basic properties
+                    Width = 800,
+                    Height = 600,
+                    Title = "CustomEngine"
+                };
 
-                // Define the window size
-                wnd.Width = 800;
-                wnd.Height = 600;
 
                 // Create a viewport for 3D rendering
                 Viewport3D viewport = new Viewport3D();
 
-                // Create a 3D pyramid (a complete 3D mesh)
-                MeshGeometry3D pyramidMesh = new MeshGeometry3D();
-                pyramidMesh.Positions.Add(new Point3D(0, 0, 0)); // base
-                pyramidMesh.Positions.Add(new Point3D(1, 0, 0)); // base
-                pyramidMesh.Positions.Add(new Point3D(0.5, 0, 1)); // top
-                pyramidMesh.Positions.Add(new Point3D(0.5, 1, 0.5)); // base
+                // Create a 3D cube (a complete 3D mesh)
+                MeshGeometry3D cubeMesh = new MeshGeometry3D();
+                cubeMesh.Positions.Add(new Point3D(0, 0, 0)); // bottom front left
+                cubeMesh.Positions.Add(new Point3D(1, 0, 0)); // bottom front right
+                cubeMesh.Positions.Add(new Point3D(1, 0, 1)); // bottom back right
+                cubeMesh.Positions.Add(new Point3D(0, 0, 1)); // bottom back left
+                cubeMesh.Positions.Add(new Point3D(0, 1, 0)); // top front left
+                cubeMesh.Positions.Add(new Point3D(1, 1, 0)); // top front right
+                cubeMesh.Positions.Add(new Point3D(1, 1, 1)); // top back right
+                cubeMesh.Positions.Add(new Point3D(0, 1, 1)); // top back left
 
                 // Front face
-                pyramidMesh.TriangleIndices.Add(0);
-                pyramidMesh.TriangleIndices.Add(1);
-                pyramidMesh.TriangleIndices.Add(2);
+                cubeMesh.TriangleIndices.Add(0);
+                cubeMesh.TriangleIndices.Add(1);
+                cubeMesh.TriangleIndices.Add(5);
+                cubeMesh.TriangleIndices.Add(0);
+                cubeMesh.TriangleIndices.Add(5);
+                cubeMesh.TriangleIndices.Add(4);
 
                 // Right face
-                pyramidMesh.TriangleIndices.Add(1);
-                pyramidMesh.TriangleIndices.Add(3);
-                pyramidMesh.TriangleIndices.Add(2);
+                cubeMesh.TriangleIndices.Add(1);
+                cubeMesh.TriangleIndices.Add(2);
+                cubeMesh.TriangleIndices.Add(6);
+                cubeMesh.TriangleIndices.Add(1);
+                cubeMesh.TriangleIndices.Add(6);
+                cubeMesh.TriangleIndices.Add(5);
 
                 // Back face
-                pyramidMesh.TriangleIndices.Add(3);
-                pyramidMesh.TriangleIndices.Add(0);
-                pyramidMesh.TriangleIndices.Add(2);
+                cubeMesh.TriangleIndices.Add(2);
+                cubeMesh.TriangleIndices.Add(3);
+                cubeMesh.TriangleIndices.Add(7);
+                cubeMesh.TriangleIndices.Add(2);
+                cubeMesh.TriangleIndices.Add(7);
+                cubeMesh.TriangleIndices.Add(6);
 
                 // Left face
-                pyramidMesh.TriangleIndices.Add(0);
-                pyramidMesh.TriangleIndices.Add(1);
-                pyramidMesh.TriangleIndices.Add(3);
+                cubeMesh.TriangleIndices.Add(3);
+                cubeMesh.TriangleIndices.Add(0);
+                cubeMesh.TriangleIndices.Add(4);
+                cubeMesh.TriangleIndices.Add(3);
+                cubeMesh.TriangleIndices.Add(4);
+                cubeMesh.TriangleIndices.Add(7);
 
-                // Create a material to apply to the pyramid
+                // Top face
+                cubeMesh.TriangleIndices.Add(4);
+                cubeMesh.TriangleIndices.Add(5);
+                cubeMesh.TriangleIndices.Add(6);
+                cubeMesh.TriangleIndices.Add(4);
+                cubeMesh.TriangleIndices.Add(6);
+                cubeMesh.TriangleIndices.Add(7);
+
+                // Bottom face
+                cubeMesh.TriangleIndices.Add(3);
+                cubeMesh.TriangleIndices.Add(2);
+                cubeMesh.TriangleIndices.Add(1);
+                cubeMesh.TriangleIndices.Add(3);
+                cubeMesh.TriangleIndices.Add(1);
+                cubeMesh.TriangleIndices.Add(0);
+
+                // Create a material to apply to the cube
                 Material material = new DiffuseMaterial(new SolidColorBrush(Colors.Green));
 
-                // Create a geometry model with the pyramid mesh and material
-                GeometryModel3D pyramidModel = new GeometryModel3D(pyramidMesh, material);
+                // Create a geometry model with the cube mesh and material
+                GeometryModel3D cubeModel = new GeometryModel3D(cubeMesh, material);
 
                 // Create a model visual containing the geometry model, and add it to the viewport
-                ModelVisual3D modelVisual = new ModelVisual3D();
-                modelVisual.Content = pyramidModel;
+                ModelVisual3D modelVisual = new ModelVisual3D
+                {
+                    Content = cubeModel
+                };
                 viewport.Children.Add(modelVisual);
 
                 // Add the viewport to the window
                 wnd.Content = viewport;
 
-                // Add a light source so the pyramid can be seen
-                DirectionalLight directionalLight = new DirectionalLight();
-                directionalLight.Color = Colors.White;
-                directionalLight.Direction = new Vector3D(-1.0, -1.0, -1.0);
-                ModelVisual3D lightModel = new ModelVisual3D();
-                lightModel.Content = directionalLight;
+                // Add a light source so the cube can be seen
+                DirectionalLight directionalLight = new DirectionalLight
+                {
+                    Color = Colors.White,
+                    Direction = new Vector3D(-1.0, -1.0, -1.0)
+                };
+                ModelVisual3D lightModel = new ModelVisual3D
+                {
+                    Content = directionalLight
+                };
                 viewport.Children.Add(lightModel);
 
-                // Create a rotation transform to rotate the pyramid
+                // Create a rotation transform to rotate the cube
                 RotateTransform3D rotateTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 0), new Point3D(0.5, 0.5, 0.5));
-                
-                pyramidModel.Transform = rotateTransform;
 
-                // Create a timer to rotate the pyramid
-                DispatcherTimer timer = new DispatcherTimer();
-                timer.Interval = TimeSpan.FromMilliseconds(10);
+                cubeModel.Transform = rotateTransform;
+
+                // Create a timer to rotate the cube
+                DispatcherTimer timer = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromMilliseconds(10)
+                };
                 timer.Tick += (sender, e) =>
                 {
                     ((AxisAngleRotation3D)rotateTransform.Rotation).Angle += 1;
