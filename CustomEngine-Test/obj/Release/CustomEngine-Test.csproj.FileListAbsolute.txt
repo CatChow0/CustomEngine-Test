@@ -1,0 +1,7 @@
+C:\Users\anton\Documents\GitHub\CustomEngine-Test\CustomEngine-Test\bin\Release\CustomEngine-Test.exe.config
+C:\Users\anton\Documents\GitHub\CustomEngine-Test\CustomEngine-Test\bin\Release\CustomEngine-Test.exe
+C:\Users\anton\Documents\GitHub\CustomEngine-Test\CustomEngine-Test\bin\Release\CustomEngine-Test.pdb
+C:\Users\anton\Documents\GitHub\CustomEngine-Test\CustomEngine-Test\obj\Release\CustomEngine-Test.csproj.AssemblyReference.cache
+C:\Users\anton\Documents\GitHub\CustomEngine-Test\CustomEngine-Test\obj\Release\CustomEngine-Test.csproj.CoreCompileInputs.cache
+C:\Users\anton\Documents\GitHub\CustomEngine-Test\CustomEngine-Test\obj\Release\CustomEngine-Test.exe
+C:\Users\anton\Documents\GitHub\CustomEngine-Test\CustomEngine-Test\obj\Release\CustomEngine-Test.pdb
