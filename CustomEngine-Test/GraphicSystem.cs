@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
@@ -10,6 +11,10 @@ namespace CustomEngine_Test
 {
     internal class GraphicSystem
     {
+        private static PerspectiveCamera _camera;
+        private static Vector3D _movement = new Vector3D(0, 0, 0);
+        private const double Displacement = 0.1;
+
         public static void Run()
         {
             // Create a new thread
@@ -28,6 +33,7 @@ namespace CustomEngine_Test
                     Height = 600,
                     Title = "CustomEngine"
                 };
+                wnd.KeyDown += Wnd_KeyDown;
 
 
                 // Create a viewport for 3D rendering
@@ -142,12 +148,14 @@ namespace CustomEngine_Test
 
                 // Center the pyramid in the window
                 // Adjust the camera's position to zoom out and fully display the pyramid
-                viewport.Camera = new PerspectiveCamera
+                _camera = new PerspectiveCamera
                 {
                     Position = new Point3D(0.5, 0.5, 6), // Increase the Z value to zoom out
                     LookDirection = new Vector3D(-0.5, -0.5, -5), // Adjust the LookDirection accordingly
                     UpDirection = new Vector3D(0, 1, 0)
                 };
+
+                viewport.Camera = _camera;
 
                 wnd.Show();
 
@@ -163,6 +171,26 @@ namespace CustomEngine_Test
 
             // Start the thread
             newWindowThread.Start();
+        }
+        private static void Wnd_KeyDown(object sender, KeyEventArgs e)
+        {
+            const double displacement = 0.1;
+
+            switch (e.Key)
+            {
+                case Key.Z:
+                    _camera.Position = new Point3D(_camera.Position.X, _camera.Position.Y, _camera.Position.Z - displacement);
+                    break;
+                case Key.S:
+                    _camera.Position = new Point3D(_camera.Position.X, _camera.Position.Y, _camera.Position.Z + displacement);
+                    break;
+                case Key.Q:
+                    _camera.Position = new Point3D(_camera.Position.X - displacement, _camera.Position.Y, _camera.Position.Z);
+                    break;
+                case Key.D:
+                    _camera.Position = new Point3D(_camera.Position.X + displacement, _camera.Position.Y, _camera.Position.Z);
+                    break;
+            }
         }
     }
 

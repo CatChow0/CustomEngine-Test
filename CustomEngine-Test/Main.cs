@@ -36,7 +36,7 @@ namespace CustomEngine_Test
         // Update function
         //public static void Update(double deltaTime)
         //{
-            //Dessin d'une ligne
+
             
         //}
     }
